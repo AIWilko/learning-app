@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Learning System</title>
+<style>
+body { background-color: #0b3d91; color: white; text-align: center; font-family: Arial; }
+button { padding: 15px; font-size: 18px; margin-top: 20px; }
+input { padding: 10px; font-size: 18px; }
+</style>
+<script>
+function unlock() {
+  var code = document.getElementById("code").value;
+  if(code === "4321") {
+    window.location.href = "session.html?child=boy";
+  } else {
+    alert("Incorrect Parent Code");
+  }
+}
+</script>
+</head>
+<body>
+
+<h1>Learning System</h1>
+<p>Enter Parent Code</p>
+
+<input id="code" type="password">
+<br>
+<button onclick="unlock()">Start</button>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Session</title>
+<style>
+body { text-align:center; font-family: Arial; }
+button { padding: 15px; font-size: 18px; margin-top: 20px; }
+</style>
+</head>
+
+<body>
+
+<h2>Learning Session</h2>
+
+<p id="child"></p>
+
+<p>Tap below to begin your lesson</p>
+
+<button onclick="startSession()">Start Lesson</button>
+
+<script>
+function startSession() {
+  alert("Parent: Open Claude and paste the session prompt to begin.");
+}
+
+var params = new URLSearchParams(window.location.search);
+var child = params.get("child");
+
+if(child === "boy"){
+  document.body.style.background = "#0b3d91";
+  document.body.style.color = "white";
+  document.getElementById("child").innerText = "Boy Session";
+}
+
+if(child === "girl"){
+  document.body.style.background = "#ff69b4";
+  document.body.style.color = "white";
+  document.getElementById("child").innerText = "Girl Session";
+}
+</script>
+
+</body>
+</html>

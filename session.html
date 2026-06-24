@@ -10,7 +10,6 @@ body {
   text-align: center;
   margin: 0;
   padding: 20px;
-  transition: 0.3s;
 }
 
 .container {
@@ -34,7 +33,6 @@ button {
   font-size: 18px;
   width: 85%;
   margin-top: 12px;
-  cursor: pointer;
 }
 
 input {
@@ -57,10 +55,10 @@ input {
   width: 0%;
   background: green;
   border-radius: 10px;
-  transition: width 0.3s;
 }
 
 .hidden { display: none; }
+
 .correct { color: green; }
 .incorrect { color: red; }
 
@@ -122,7 +120,7 @@ let timerInterval;
 
 let child = new URLSearchParams(window.location.search).get("child");
 
-// THEMES
+// THEME
 if(child === "boy"){
   document.body.style.background = "#0b3d91";
   document.body.style.color = "white";
@@ -135,7 +133,7 @@ if(child === "girl"){
   document.getElementById("title").innerText = "My Learning";
 }
 
-// START BUTTON FIXED (IMPORTANT)
+// START BUTTON
 document.getElementById("startBtn").addEventListener("click", function(){
 
   let prompt =
@@ -146,10 +144,10 @@ document.getElementById("startBtn").addEventListener("click", function(){
 
   let encoded = encodeURIComponent(prompt);
 
-  // OPEN CLAUDE (WORKING)
-  window.open("https://claude.ai/new?text=" + encoded, "_blank");
+  // ✅ Use reliable Claude URL
+  window.open("https://claude.ai/", "_blank");
 
-  // START APP SESSION
+  // START LOCAL SESSION UI
   document.getElementById("intro").classList.add("hidden");
   document.getElementById("lessonBox").classList.remove("hidden");
 
@@ -185,21 +183,25 @@ function nextQuestion(){
 
   answerVal = a + b;
 
-  document.getElementById("question").innerText = "Q" + step + ": " + a + " + " + b;
+  document.getElementById("question").innerText =
+    "Q" + step + ": " + a + " + " + b;
+
   document.getElementById("answer").value = "";
   document.getElementById("feedback").innerText = "";
 }
 
-// ANSWERS
+// ANSWER SUBMIT
 document.getElementById("submitBtn").addEventListener("click", function(){
 
   let ans = parseInt(document.getElementById("answer").value);
 
   if(ans === answerVal){
     correct++;
-    document.getElementById("feedback").innerHTML = "<span class='correct'>✅ Correct</span>";
+    document.getElementById("feedback").innerHTML =
+      "<span class='correct'>✅ Correct</span>";
   } else {
-    document.getElementById("feedback").innerHTML = "<span class='incorrect'>❌ Incorrect</span>";
+    document.getElementById("feedback").innerHTML =
+      "<span class='incorrect'>❌ Incorrect</span>";
   }
 
   setTimeout(nextQuestion, 800);
@@ -245,3 +247,4 @@ document.getElementById("restartBtn").addEventListener("click", function(){
 
 </body>
 </html>
+``

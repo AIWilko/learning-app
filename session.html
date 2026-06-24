@@ -136,15 +136,17 @@ if(child === "girl"){
 // START LESSON
 function startLesson(){
 
-  let prompt = encodeURIComponent(`
-PARENT CODE: 4321
-CHILD: ${child === "boy" ? "Boy 9" : "Girl 7"}
-SESSION LENGTH: ${child === "boy" ? "25" : "15"} minutes
+  let child = new URLSearchParams(window.location.search).get("child");
 
-Start session
-  `);
+  let prompt = encodeURIComponent(
+"PARENT CODE: 4321\n" +
+"CHILD: " + (child === "boy" ? "Boy 9" : "Girl 7") + "\n" +
+"SESSION LENGTH: " + (child === "boy" ? "25" : "15") + " minutes\n\n" +
+"Start session"
+  );
 
-  window.open("https://claude.ai/new?prompt=" + prompt, "_blank");
+  window.open("https://claude.ai/new?text=" + prompt, "_blank");
+}
 
   document.getElementById("intro").classList.add("hidden");
   document.getElementById("lessonBox").classList.remove("hidden");

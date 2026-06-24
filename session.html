@@ -34,6 +34,7 @@ button {
   font-size: 18px;
   width: 85%;
   margin-top: 12px;
+  cursor: pointer;
 }
 
 input {
@@ -80,7 +81,7 @@ input {
 
 <div id="intro" class="card">
 <p>Ready to start?</p>
-<button onclick="startLesson()">▶ Start Lesson</button>
+<button id="startBtn">▶ Start Lesson</button>
 </div>
 
 <div id="lessonBox" class="card hidden">
@@ -95,7 +96,7 @@ input {
 <input id="answer" placeholder="Type answer">
 <br>
 
-<button onclick="submitAnswer()">Submit</button>
+<button id="submitBtn">Submit</button>
 <p id="feedback"></p>
 </div>
 
@@ -105,7 +106,7 @@ input {
 <p id="level"></p>
 <div id="badge"></div>
 
-<button onclick="restart()">New Session</button>
+<button id="restartBtn">New Session</button>
 </div>
 
 </div>
@@ -127,27 +128,28 @@ if(child === "boy"){
   document.body.style.color = "white";
   document.getElementById("title").innerText = "Learning System";
 }
+
 if(child === "girl"){
   document.body.style.background = "#ff69b4";
   document.body.style.color = "white";
   document.getElementById("title").innerText = "My Learning";
 }
 
-// START LESSON
-function startLesson(){
+// START BUTTON FIXED (IMPORTANT)
+document.getElementById("startBtn").addEventListener("click", function(){
 
-  let child = new URLSearchParams(window.location.search).get("child");
-
-  let prompt = encodeURIComponent(
+  let prompt =
 "PARENT CODE: 4321\n" +
 "CHILD: " + (child === "boy" ? "Boy 9" : "Girl 7") + "\n" +
 "SESSION LENGTH: " + (child === "boy" ? "25" : "15") + " minutes\n\n" +
-"Start session"
-  );
+"Start session";
 
-  window.open("https://claude.ai/new?text=" + prompt, "_blank");
-}
+  let encoded = encodeURIComponent(prompt);
 
+  // OPEN CLAUDE (WORKING)
+  window.open("https://claude.ai/new?text=" + encoded, "_blank");
+
+  // START APP SESSION
   document.getElementById("intro").classList.add("hidden");
   document.getElementById("lessonBox").classList.remove("hidden");
 
@@ -157,7 +159,7 @@ function startLesson(){
 
   startTimer();
   nextQuestion();
-}
+});
 
 // TIMER
 function startTimer(){
@@ -183,12 +185,14 @@ function nextQuestion(){
 
   answerVal = a + b;
 
-  document.getElementById("question").innerText = `Q${step}: ${a} + ${b}`;
+  document.getElementById("question").innerText = "Q" + step + ": " + a + " + " + b;
   document.getElementById("answer").value = "";
+  document.getElementById("feedback").innerText = "";
 }
 
 // ANSWERS
-function submitAnswer(){
+document.getElementById("submitBtn").addEventListener("click", function(){
+
   let ans = parseInt(document.getElementById("answer").value);
 
   if(ans === answerVal){
@@ -199,9 +203,10 @@ function submitAnswer(){
   }
 
   setTimeout(nextQuestion, 800);
-}
 
-// END
+});
+
+// END SESSION
 function endSession(){
   clearInterval(timerInterval);
 
@@ -216,10 +221,10 @@ function endSession(){
   else if(accuracy >= 60) level = "Improving 📈";
 
   document.getElementById("result").innerText =
-    `Score: ${correct}/5 | Time: ${time}s`;
+    "Score: " + correct + "/5 | Time: " + time + "s";
 
   document.getElementById("level").innerText =
-    `Level: ${level}`;
+    "Level: " + level;
 
   let badge = "";
   if(time < 30 && accuracy >= 80) badge = "⚡ Fast Thinker";
@@ -227,14 +232,14 @@ function endSession(){
   else badge = "💪 Keep Improving";
 
   document.getElementById("badge").innerHTML =
-    `<div class='badge'>${badge}</div>`;
+    "<div class='badge'>" + badge + "</div>";
 }
 
 // RESTART
-function restart(){
+document.getElementById("restartBtn").addEventListener("click", function(){
   document.getElementById("resultBox").classList.add("hidden");
   document.getElementById("intro").classList.remove("hidden");
-}
+});
 
 </script>
 

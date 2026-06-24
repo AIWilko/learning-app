@@ -16,26 +16,22 @@ button { padding: 15px; font-size: 18px; margin-top: 20px; }
 
 <p>Tap below to begin your lesson</p>
 
-<button onclick="startSession()">Start Lesson</button>
+<button onclick="startLesson()">Start Lesson</button>
 
 <script>
-function startSession() {
-  alert("Parent: Open Claude and paste the session prompt to begin.");
-}
+function startLesson(){
 
-var params = new URLSearchParams(window.location.search);
-var child = params.get("child");
+  let child = new URLSearchParams(window.location.search).get("child");
 
-if(child === "boy"){
-  document.body.style.background = "#0b3d91";
-  document.body.style.color = "white";
-  document.getElementById("child").innerText = "Boy Session";
-}
+  let prompt = encodeURIComponent(`
+PARENT CODE: 4321
+CHILD: ${child === "boy" ? "Boy 9" : "Girl 7"}
+SESSION LENGTH: ${child === "boy" ? "25" : "15"} minutes
 
-if(child === "girl"){
-  document.body.style.background = "#ff69b4";
-  document.body.style.color = "white";
-  document.getElementById("child").innerText = "Girl Session";
+Start session
+  `);
+
+  window.open("https://claude.ai/new?prompt=" + prompt, "_blank");
 }
 </script>
 

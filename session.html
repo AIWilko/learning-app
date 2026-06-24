@@ -1,39 +1,114 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Session</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learning App</title>
+
 <style>
-body { text-align:center; font-family: Arial; }
-button { padding: 15px; font-size: 18px; margin-top: 20px; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, Arial;
+  text-align: center;
+  margin: 0;
+  padding: 20px;
+  transition: 0.3s;
+}
+
+.container {
+  max-width: 400px;
+  margin: auto;
+}
+
+.card {
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  margin-top: 20px;
+  color: black;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+button {
+  border: none;
+  border-radius: 12px;
+  padding: 15px;
+  font-size: 18px;
+  width: 80%;
+  margin-top: 15px;
+}
+
+input {
+  padding: 12px;
+  font-size: 18px;
+  width: 80%;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+.correct {
+  color: green;
+  font-weight: bold;
+}
+
+.incorrect {
+  color: red;
+  font-weight: bold;
+}
+
+.hidden {
+  display: none;
+}
 </style>
 </head>
 
 <body>
 
-<h2>Learning Session</h2>
+<div class="container">
 
-<p id="child"></p>
+  <h1 id="title">Learning</h1>
 
-<p>Tap below to begin your lesson</p>
+  <div id="intro" class="card">
+    <p>Ready to start your learning session?</p>
+    <button onclick="startLesson()">▶ Start Lesson</button>
+  </div>
 
-<button onclick="startLesson()">Start Lesson</button>
+  <div id="lessonBox" class="card hidden">
+    <h2 id="question"></h2>
+
+    <input id="answer" placeholder="Type your answer" />
+    <br>
+
+    <button onclick="submitAnswer()">Submit</button>
+
+    <p id="feedback"></p>
+  </div>
+
+  <div id="resultBox" class="card hidden">
+    <h2>Session Complete 🎉</h2>
+    <p id="result"></p>
+
+    <button onclick="restart()">Start New Session</button>
+  </div>
+
+</div>
 
 <script>
-function startLesson(){
 
-  let child = new URLSearchParams(window.location.search).get("child");
+let step = 0;
+let correct = 0;
+let currentAnswer = 0;
 
-  let prompt = encodeURIComponent(`
-PARENT CODE: 4321
-CHILD: ${child === "boy" ? "Boy 9" : "Girl 7"}
-SESSION LENGTH: ${child === "boy" ? "25" : "15"} minutes
+let child = new URLSearchParams(window.location.search).get("child");
 
-Start session
-  `);
-
-  window.open("https://claude.ai/new?prompt=" + prompt, "_blank");
+// Theme
+if(child === "boy"){
+  document.body.style.background = "#0b3d91";
+  document.body.style.color = "white";
+  document.getElementById("title").innerText = "Learning System";
 }
-</script>
 
-</body>
-</html>
+if(child === "girl"){
+  document.body.style.background = "#ff69b4";
+  document.body.style.color = "white";
+  document.getElementById("title").innerText = "My Learning";
+}
+
